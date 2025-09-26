@@ -1,0 +1,41 @@
+
+Usage video:
+https://youtu.be/S3da-vg1yP8
+
+
+## Putting It All Together: Your Step-by-Step Guide for PowerShell
+Follow these steps in your VSCode PowerShell terminal. This will download the model to your server and then run a transcription using a local audio file.
+
+1. Set the Server URL Variable
+This command saves your server's URL in a variable for the current session.
+
+PowerShell
+
+$env:SPEACHES_BASE_URL = "http://voiceagent-speaches-6pb1ai-78296c-135-181-151-53.traefik.me"
+2. List Available STT Models (Optional)
+This command connects to your server and lists all the speech-to-text models you can download. We'll just display the raw JSON output.
+
+PowerShell
+
+uvx speaches-cli registry ls --task automatic-speech-recognition
+3. Download the STT Model to Your Server
+This command tells your remote server to download and install the recommended distil-whisper model.
+
+PowerShell
+
+uvx speaches-cli model download "Systran/faster-distil-whisper-small.en"
+4. Set the Transcription Model ID Variable
+This saves the name of the model you just downloaded into a variable.
+
+PowerShell
+
+$env:TRANSCRIPTION_MODEL_ID = "Systran/faster-distil-whisper-small.en"
+5. Run a Transcription ✅
+This is the final step. It uses the real curl.exe to upload an audio file from your computer to your server for transcription.
+
+👉 Prerequisite: Make sure you have a file named audio.wav in the same folder you are running the command from (C:\Users\Shoai\Documents\Web Projects\speaches).
+
+PowerShell
+
+curl.exe -s "$($env:SPEACHES_BASE_URL)/v1/audio/transcriptions" -F "file=@audio.wav" -F "model=$($env:TRANSCRIPTION_MODEL_ID)"
+After running the final command, you should see the transcribed text from your audio file printed directly in the terminal.

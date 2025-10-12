@@ -8,7 +8,21 @@ For detailed output:
 uvx speaches-cli registry ls --task text-to-speech
 
 For just names:
+- for getting TTS:
 uvx speaches-cli registry ls --task text-to-speech | jq '.data[] | .id'
+
+- for getting STT:
+uvx speaches-cli registry ls --task automatic-speech-recognition | jq '.data[].id'
+or
+uvx speaches-cli registry ls --task automatic-speech-recognition | jq -r '.data[] | .id' | ForEach-Object -Begin {$i=1} -Process {"$i. $_"; $i++}
+
+------- Current downloaded models -------
+Systran/faster-whisper-tiny
+PierreMesure/kb-whisper-tiny-ct2
+sorendal/skyrim-whisper-tiny-int8
+sorendal/skyrim-whisper-small-int8
+ywuachr/openai-whisper-tiny-ct2
+Systran/faster-distil-whisper-small.en
 
 # To get and install new models:
 ## First set local or remote env var on powershell as:
